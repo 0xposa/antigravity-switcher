@@ -93,7 +93,7 @@ Selain menggunakan slash command di atas, Anda **bisa langsung berbicara santai*
 
 ---
 
-### 2. Di Terminal Termux (`agy-switcher`)
+### 2. Di Terminal(`agy-switcher`)
 
 #### Menu Interaktif TUI
 Jalankan perintah berikut:
@@ -248,7 +248,7 @@ In addition to slash commands, you can **simply chat naturally** with the AI ass
 
 ---
 
-### 2. In Termux Terminal (`agy-switcher`)
+### 2. In Terminal (`agy-switcher`)
 
 #### Interactive TUI Menu
 Execute:
