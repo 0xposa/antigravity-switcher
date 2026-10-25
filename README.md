@@ -1,10 +1,10 @@
-# 🚀 Antigravity Switcher (`agy-switcher`) v1.0
+# 🚀 Antigravity Switcher (`agy-switcher`) v1.1
 
 > **Solusi Multi-Akun & Rotasi Otomatis saat Limit untuk Google Antigravity CLI (`agy`)**  
 > **Multi-Account Manager & Zero-Interruption Auto-Rotation for Google Antigravity CLI (`agy`)**  
 > Dibuat oleh / Created by **[@0xposa](https://x.com/0xposa)** di X (Twitter).
 
-[![Release](https://img.shields.io/badge/Release-v1.0-blue.svg)](https://github.com/0xposa/antigravity-switcher/releases)
+[![Release](https://img.shields.io/badge/Release-v1.1-blue.svg)](https://github.com/0xposa/antigravity-switcher/releases)
 [![Twitter Follow](https://img.shields.io/twitter/follow/0xposa?style=social)](https://x.com/0xposa)
 [![License: Custom (No Derivatives)](https://img.shields.io/badge/License-No--Derivatives-red.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-green.svg)]()
@@ -24,7 +24,7 @@ Google Antigravity CLI (`agy`) secara bawaan hanya menyimpan satu sesi login akt
 1. **Batas Kuota / Rate Limit (HTTP 429)**: Model-model unggulan seperti Claude Opus/Sonnet dan Gemini memiliki batas kuota harian per akun Google. Saat batas habis, alur kerja coding langsung terhenti.
 2. **Repot Ganti Akun**: Harus login ulang manual melalui browser, mengetik perintah berulang, dan kehilangan konteks sesi chat.
 
-**Antigravity Switcher v1.0** menyelesaikan masalah ini dengan manajemen multi-akun aman di Terminal dan integrasi skill otonom langsung di dalam Antigravity. Saat kuota akun aktif habis, sistem akan **secara otomatis merotasi akun ke akun cadangan yang aktif (`✅ on`) dan melanjutkan tugas tanpa jeda!**
+**Antigravity Switcher v1.1** menyelesaikan masalah ini dengan manajemen multi-akun aman di Terminal dan integrasi skill otonom langsung di dalam Antigravity. Saat kuota akun aktif habis, sistem akan **secara otomatis merotasi akun ke akun cadangan yang aktif (`✅ on`) dan melanjutkan tugas tanpa jeda!**
 
 ---
 
@@ -177,7 +177,7 @@ Google Antigravity CLI (`agy`) natively only retains a single active login sessi
 1. **Quota Limits & Rate Limits (HTTP 429)**: Premier reasoning models (such as Claude Opus/Sonnet and Gemini) have per-account daily quotas. When limits are exceeded, development freezes.
 2. **Tedious Re-authentication**: Manually logging out, opening browser prompts, and resetting sessions disrupts the developer flow.
 
-**Antigravity Switcher v1.0** bridges this gap by offering isolated multi-account vault storage in Terminal paired with autonomous agent skills inside Antigravity. When a quota exhaustion event occurs, credentials are **automatically rotated to the next available account marked `✅ on`, resuming tasks seamlessly with zero interruptions!**
+**Antigravity Switcher v1.1** bridges this gap by offering isolated multi-account vault storage in Terminal paired with autonomous agent skills inside Antigravity. When a quota exhaustion event occurs, credentials are **automatically rotated to the next available account marked `✅ on`, resuming tasks seamlessly with zero interruptions!**
 
 ---
 
