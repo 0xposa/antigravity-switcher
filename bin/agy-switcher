@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/env python3
+#!/usr/bin/env python3
 import os
 import sys
 import json
@@ -7,20 +7,161 @@ import shutil
 import subprocess
 from datetime import datetime
 
-HOME = os.environ.get("HOME", "/data/data/com.termux/files/home")
+HOME = os.path.expanduser("~")
 AGY_DIR = os.path.join(HOME, ".gemini", "antigravity-cli")
 ACTIVE_TOKEN = os.path.join(AGY_DIR, "antigravity-oauth-token")
 ACCOUNTS_DIR = os.path.join(AGY_DIR, "accounts")
 ROTATION_CONFIG = os.path.join(AGY_DIR, "rotation_config.json")
 SETTINGS_FILE = os.path.join(AGY_DIR, "settings.json")
+SOUND_DIR = os.path.join(AGY_DIR, "sounds")
+SOUND_FILE = os.path.join(SOUND_DIR, "hidup-jokowi.mp3")
+SOUND_URL = "https://www.myinstants.com/media/sounds/hidup-jokowi.mp3"
+EXIT_SOUND_FILE = os.path.join(SOUND_DIR, "antek-asing.mp3")
+EXIT_SOUND_URL = "https://www.myinstants.com/media/sounds/hey-antek-antek-asing-prabowo.mp3"
+IS_INTERACTIVE = False
 
 os.makedirs(ACCOUNTS_DIR, exist_ok=True)
 
-# ----------------- Screen Helper -----------------
+# ----------------- Audio & Screen Helper -----------------
+
+def maximize_device_volume():
+    """Maximize hardware master volume (100%) across macOS, Windows, Linux, and Android."""
+    try:
+        if sys.platform == "darwin":
+            subprocess.run(
+                ["osascript", "-e", "set volume output volume 100", "-e", "set volume output muted false"],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        elif os.name == "nt":
+            ps_max_vol = "$w = New-Object -ComObject WScript.Shell; 1..50 | ForEach-Object { $w.SendKeys([char]175) }"
+            subprocess.run(
+                ["powershell", "-NoProfile", "-Command", ps_max_vol],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        else:
+            if shutil.which("termux-volume"):
+                subprocess.run(["termux-volume", "music", "15"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
+            elif shutil.which("pactl"):
+                subprocess.run(["pactl", "set-sink-volume", "@DEFAULT_SINK@", "100%"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            elif shutil.which("amixer"):
+                subprocess.run(["amixer", "set", "Master", "100%"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            else:
+                subprocess.run(["cmd", "media_session", "volume", "--stream", "3", "--set", "15"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=1)
+    except Exception:
+        pass
+
+def play_welcome_sound():
+    """Play sound effect once with maximum volume in background thread without blocking."""
+    def _play():
+        try:
+            os.makedirs(SOUND_DIR, exist_ok=True)
+            if not os.path.exists(SOUND_FILE):
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                bundled = os.path.join(script_dir, "..", "assets", "sounds", "hidup-jokowi.mp3")
+                if os.path.exists(bundled):
+                    shutil.copy2(bundled, SOUND_FILE)
+                else:
+                    import urllib.request
+                    urllib.request.urlretrieve(SOUND_URL, SOUND_FILE)
+
+            if not os.path.exists(SOUND_FILE):
+                return
+
+            # Maximize hardware device volume to 100%
+            maximize_device_volume()
+
+            # Max volume playback across different platforms (Boosted++)
+            if shutil.which("mpv"):
+                subprocess.run(
+                    [
+                        "mpv",
+                        "--no-video",
+                        "--no-terminal",
+                        "--volume-max=1000",
+                        "--volume=600",
+                        "--af=volume=15dB,alimiter=limit=1.0",
+                        SOUND_FILE
+                    ],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                )
+            elif sys.platform == "darwin" and shutil.which("afplay"):
+                subprocess.run(
+                    ["afplay", "-v", "3", SOUND_FILE],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                )
+            elif os.name == "nt":
+                ps_cmd = f"Add-Type -AssemblyName presentationCore; $p = New-Object System.Windows.Media.MediaPlayer; $p.Volume = 1.0; $p.Open([System.Uri]'{SOUND_FILE}'); $p.Play(); Start-Sleep -s 4"
+                subprocess.run(
+                    ["powershell", "-NoProfile", "-Command", ps_cmd],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                )
+            elif shutil.which("ffplay"):
+                subprocess.run(
+                    ["ffplay", "-nodisp", "-autoexit", "-volume", "100", "-af", "volume=15dB", SOUND_FILE],
+                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+                )
+            elif shutil.which("termux-media-player"):
+                if shutil.which("termux-volume"):
+                    subprocess.run(["termux-volume", "music", "15"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=1)
+                subprocess.run(["termux-media-player", "play", SOUND_FILE], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
+        except Exception:
+            pass
+
+    import threading
+    threading.Thread(target=_play, daemon=True).start()
+
+def play_exit_sound():
+    """Play exit sound effect once with natural original sound (no booster/bass)."""
+    try:
+        os.makedirs(SOUND_DIR, exist_ok=True)
+        if not os.path.exists(EXIT_SOUND_FILE):
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            bundled = os.path.join(script_dir, "..", "assets", "sounds", "antek-asing.mp3")
+            if os.path.exists(bundled):
+                shutil.copy2(bundled, EXIT_SOUND_FILE)
+            else:
+                import urllib.request
+                urllib.request.urlretrieve(EXIT_SOUND_URL, EXIT_SOUND_FILE)
+
+        if not os.path.exists(EXIT_SOUND_FILE):
+            return
+
+        # Maximize hardware device volume to 100%
+        maximize_device_volume()
+
+        # Play with original natural sound (no booster, no bass, pure original sound)
+        if shutil.which("mpv"):
+            subprocess.run(
+                ["mpv", "--no-video", "--no-terminal", EXIT_SOUND_FILE],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        elif sys.platform == "darwin" and shutil.which("afplay"):
+            subprocess.run(
+                ["afplay", EXIT_SOUND_FILE],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        elif os.name == "nt":
+            ps_cmd = f"Add-Type -AssemblyName presentationCore; $p = New-Object System.Windows.Media.MediaPlayer; $p.Volume = 1.0; $p.Open([System.Uri]'{EXIT_SOUND_FILE}'); $p.Play(); Start-Sleep -s 4"
+            subprocess.run(
+                ["powershell", "-NoProfile", "-Command", ps_cmd],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        elif shutil.which("ffplay"):
+            subprocess.run(
+                ["ffplay", "-nodisp", "-autoexit", EXIT_SOUND_FILE],
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            )
+        elif shutil.which("termux-media-player"):
+            subprocess.run(["termux-media-player", "play", EXIT_SOUND_FILE], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=4)
+    except Exception:
+        pass
 
 def clear_screen():
-    """Clear terminal screen and scrollback buffer completely."""
-    os.system("clear")
+    """Clear terminal screen and scrollback buffer completely across OS platforms."""
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
     sys.stdout.write("\033[2J\033[H\033[3J")
     sys.stdout.flush()
 
@@ -50,6 +191,10 @@ def get_email_from_token_file(filepath):
     try:
         with open(filepath, "r", encoding="utf-8") as f:
             data = json.load(f)
+        if data.get("id_token_email"):
+            return data.get("id_token_email")
+        if data.get("email"):
+            return data.get("email")
         id_token = data.get("id_token")
         if id_token:
             parts = id_token.split(".")
@@ -423,7 +568,7 @@ def rotate_account_internal():
     shutil.copy2(next_acc["path"], ACTIVE_TOKEN)
     return True, next_acc["email"]
 
-# ----------------- Interactive UI in Termux -----------------
+# ----------------- Interactive UI in Terminal -----------------
 
 TEXTS = {
     "id": {
@@ -665,6 +810,9 @@ def ui_remove_account(lang="id"):
     return True
 
 def interactive_loop():
+    global IS_INTERACTIVE
+    IS_INTERACTIVE = True
+    play_welcome_sound()
     # 1. Pilih Bahasa (Layar bersih)
     clear_screen()
     print(get_cat_banner("id"))
@@ -680,6 +828,7 @@ def interactive_loop():
         clear_screen()
         print(get_cat_banner("id"))
         print("\nSampai jumpa! / Goodbye!\n")
+        play_exit_sound()
         return
     lang = "en" if lang_choice == "2" else "id"
 
@@ -723,6 +872,7 @@ def interactive_loop():
             clear_screen()
             print(get_cat_banner(lang))
             print("\nSampai jumpa! / Goodbye!\n")
+            play_exit_sound()
             break
         else:
             err_msg = t["invalid"]
@@ -731,6 +881,16 @@ def interactive_loop():
 
 def main():
     try:
+        prog_name = os.path.basename(sys.argv[0]).lower()
+        if "rotation" in prog_name and len(sys.argv) == 1:
+            ok, res = rotate_account_internal()
+            if ok:
+                print(f"OK:{res}")
+                sys.exit(0)
+            else:
+                print(f"ERR:{res}", file=sys.stderr)
+                sys.exit(1)
+
         if len(sys.argv) == 1:
             interactive_loop()
             return
@@ -905,6 +1065,8 @@ def main():
     except (KeyboardInterrupt, EOFError):
         clear_screen()
         print("\nKeluar dari program (Ctrl+C). Sampai jumpa! / Goodbye!\n")
+        if IS_INTERACTIVE:
+            play_exit_sound()
         sys.exit(0)
 
 if __name__ == "__main__":

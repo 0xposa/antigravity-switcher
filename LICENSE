@@ -1,16 +1,26 @@
-MIT License
+Custom Source-Available License (No Derivatives)
 
-Copyright (c) 2026 @0xposa
+Copyright (c) 2026 @0xposa (https://x.com/0xposa)
+
+All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+of this software and associated documentation files (the "Software"), to run,
+use, and distribute verbatim copies of the Software for personal or educational
+purposes, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. NO MODIFICATION:
+   You may NOT modify, alter, adapt, translate, transform, decompile, or
+   create derivative works based upon the Software or any portion of its source code.
+
+2. VERBATIM REDISTRIBUTION ONLY:
+   Redistribution of the Software is permitted ONLY in its original, unmodified form.
+   Any copy or distribution must retain this entire copyright notice, author attribution,
+   and license text without modification.
+
+3. NO COMMERCIAL DISTRIBUTION:
+   The Software may not be sold, rented, leased, or sublicensed, nor incorporated
+   into commercial packages without express prior written permission from the author.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

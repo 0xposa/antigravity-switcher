@@ -6,8 +6,8 @@
 
 [![Release](https://img.shields.io/badge/Release-v1.0-blue.svg)](https://github.com/0xposa/antigravity-switcher/releases)
 [![Twitter Follow](https://img.shields.io/twitter/follow/0xposa?style=social)](https://x.com/0xposa)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Termux%20%7C%20Linux-green.svg)]()
+[![License: Custom (No Derivatives)](https://img.shields.io/badge/License-No--Derivatives-red.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-green.svg)]()
 
 ---
 
@@ -24,12 +24,12 @@ Google Antigravity CLI (`agy`) secara bawaan hanya menyimpan satu sesi login akt
 1. **Batas Kuota / Rate Limit (HTTP 429)**: Model-model unggulan seperti Claude Opus/Sonnet dan Gemini memiliki batas kuota harian per akun Google. Saat batas habis, alur kerja coding langsung terhenti.
 2. **Repot Ganti Akun**: Harus login ulang manual melalui browser, mengetik perintah berulang, dan kehilangan konteks sesi chat.
 
-**Antigravity Switcher v1.0** menyelesaikan masalah ini dengan manajemen multi-akun aman di Termux dan integrasi skill otonom langsung di dalam Antigravity. Saat kuota akun aktif habis, sistem akan **secara otomatis merotasi akun ke akun cadangan yang aktif (`✅ on`) dan melanjutkan tugas tanpa jeda!**
+**Antigravity Switcher v1.0** menyelesaikan masalah ini dengan manajemen multi-akun aman di Terminal dan integrasi skill otonom langsung di dalam Antigravity. Saat kuota akun aktif habis, sistem akan **secara otomatis merotasi akun ke akun cadangan yang aktif (`✅ on`) dan melanjutkan tugas tanpa jeda!**
 
 ---
 
 ## ✨ Fitur Utama
-- 📱 **Menu Termux Interaktif (`agy-switcher`)**: Tampilan TUI terminal bersih, banner ASCII keren, tanpa emoji berlebih di menu, serta dukungan dwibahasa (Indonesia & English).
+- 💻 **Menu Terminal Interaktif (`agy-switcher`)**: Tampilan TUI terminal bersih, banner ASCII keren, tanpa emoji berlebih di menu, serta dukungan dwibahasa (Indonesia & English).
 - 🧭 **Navigasi Intuitif**: Opsi kembali (`0`) di semua submenu dan opsi keluar langsung (`3`) pada menu pemilihan bahasa awal.
 - ➕ **Tambah Akun Tanpa Gangguan**: Tambahkan akun Google baru tanpa mengeluarkan akun yang sedang aktif.
 - 🗑️ **Hapus Akun**: Bersihkan akun yang sudah tidak diperlukan dengan mudah.
@@ -44,18 +44,16 @@ Google Antigravity CLI (`agy`) secara bawaan hanya menyimpan satu sesi login akt
 
 ## 📦 Cara Instalasi
 
-Pilih salah satu cara instalasi di bawah ini (Termux / Linux):
+Jalankan perintah one-line berikut di Terminal:
 
-### Cara 1: Instal Cepat via One-Line Script (cURL)
+### 🐧 Linux & 🍏 macOS
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.sh)"
 ```
 
-### Cara 2: Menggunakan Git Clone
-```bash
-git clone https://github.com/0xposa/antigravity-switcher.git
-cd antigravity-switcher
-bash install.sh
+### 🪟 Windows (PowerShell)
+```powershell
+irm https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.ps1 | iex
 ```
 
 ---
@@ -179,12 +177,12 @@ Google Antigravity CLI (`agy`) natively only retains a single active login sessi
 1. **Quota Limits & Rate Limits (HTTP 429)**: Premier reasoning models (such as Claude Opus/Sonnet and Gemini) have per-account daily quotas. When limits are exceeded, development freezes.
 2. **Tedious Re-authentication**: Manually logging out, opening browser prompts, and resetting sessions disrupts the developer flow.
 
-**Antigravity Switcher v1.0** bridges this gap by offering isolated multi-account vault storage in Termux paired with autonomous agent skills inside Antigravity. When a quota exhaustion event occurs, credentials are **automatically rotated to the next available account marked `✅ on`, resuming tasks seamlessly with zero interruptions!**
+**Antigravity Switcher v1.0** bridges this gap by offering isolated multi-account vault storage in Terminal paired with autonomous agent skills inside Antigravity. When a quota exhaustion event occurs, credentials are **automatically rotated to the next available account marked `✅ on`, resuming tasks seamlessly with zero interruptions!**
 
 ---
 
 ## ✨ Key Features
-- 📱 **Interactive Termux TUI (`agy-switcher`)**: Single-screen, clean terminal UI with ASCII header, bilingual prompts, and no emoji clutter in menu items.
+- 💻 **Interactive Terminal TUI (`agy-switcher`)**: Single-screen, clean terminal UI with ASCII header, bilingual prompts, and no emoji clutter in menu items.
 - 🧭 **Intuitive Navigation**: Seamless return option (`0`) across all submenus and quick exit (`3`) in the initial language selector.
 - ➕ **Seamless Account Addition**: Add additional Google accounts without disturbing your active session credentials.
 - 🗑️ **Account Deletion**: Easily prune inactive or decommissioned accounts.
@@ -199,18 +197,16 @@ Google Antigravity CLI (`agy`) natively only retains a single active login sessi
 
 ## 📦 Installation
  
-Choose one of the installation methods below (Termux / Linux):
+Run the following one-liner in your Terminal:
 
-### Option 1: Quick Install via One-Liner Script (cURL)
+### 🐧 Linux & 🍏 macOS
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.sh)"
 ```
 
-### Option 2: Using Git Clone
-```bash
-git clone https://github.com/0xposa/antigravity-switcher.git
-cd antigravity-switcher
-bash install.sh
+### 🪟 Windows (PowerShell)
+```powershell
+irm https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.ps1 | iex
 ```
 
 ---
@@ -336,4 +332,4 @@ Don't forget to star ⭐ this repository if it helps your daily workflow!
 ---
 
 ## 📄 License
-Released under the [MIT](LICENSE) License.
+Released under the [Custom No-Derivatives](LICENSE) License. All rights reserved.

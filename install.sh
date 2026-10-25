@@ -16,7 +16,7 @@ elif [ -d "$HOME/.local/bin" ]; then
 elif [ -w "/usr/local/bin" ]; then
   BIN_DIR="/usr/local/bin"
 else
-  BIN_DIR="$HOME/.gemini/antigravity-cli/bin"
+  BIN_DIR="$HOME/.local/bin"
   mkdir -p "$BIN_DIR"
 fi
 
@@ -41,10 +41,13 @@ fi
 
 chmod +x "$BIN_DIR/agy-switcher"
 
-# Fix shebangs untuk Termux jika tersedia
+# Fix shebangs jika command fixer tersedia
 if command -v termux-fix-shebang >/dev/null 2>&1; then
-  echo "🔧 Fixing shebangs for Termux environment..."
+  echo "🔧 Fixing shebangs for environment..."
   termux-fix-shebang "$BIN_DIR/agy-switcher" 2>/dev/null || true
+  if [ -f "$BIN_DIR/agy-claude" ]; then
+    termux-fix-shebang "$BIN_DIR/agy-claude" 2>/dev/null || true
+  fi
 fi
 
 # Pasang Custom Skills ke Antigravity
@@ -66,6 +69,12 @@ for skill_name in antigravity-switcher switcher-account; do
   fi
 done
 
+# Pasang Sound Assets
+if [ -d "$SCRIPT_DIR/assets/sounds" ]; then
+  mkdir -p "$HOME/.gemini/antigravity-cli/sounds"
+  cp -r "$SCRIPT_DIR/assets/sounds/"* "$HOME/.gemini/antigravity-cli/sounds/" 2>/dev/null || true
+fi
+
 # Pasang Workspace Rules (AGENTS.md & GEMINI.md)
 if [ -f "$SCRIPT_DIR/AGENTS.md" ]; then
   cp "$SCRIPT_DIR/AGENTS.md" "$HOME/AGENTS.md"
@@ -78,8 +87,32 @@ if [ "$CLEANUP_TEMP" -eq 1 ] && [ -n "$TEMP_DIR" ] && [ -d "$TEMP_DIR" ]; then
   rm -rf "$TEMP_DIR"
 fi
 
+# Mainkan sound instalasi di background dengan hardware volume maksimal (100%)
+INSTALL_SOUND="$HOME/.gemini/antigravity-cli/sounds/tidak-punya-uang.mp3"
+if [ -f "$INSTALL_SOUND" ]; then
+  if [ "$(uname)" = "Darwin" ]; then
+    osascript -e "set volume output volume 100" -e "set volume output muted false" 2>/dev/null || true
+  elif command -v termux-volume >/dev/null 2>&1; then
+    termux-volume music 15 2>/dev/null || true
+  elif command -v pactl >/dev/null 2>&1; then
+    pactl set-sink-volume @DEFAULT_SINK@ 100% 2>/dev/null || true
+  elif command -v amixer >/dev/null 2>&1; then
+    amixer set Master 100% 2>/dev/null || true
+  fi
+
+  if command -v mpv >/dev/null 2>&1; then
+    mpv --no-video --no-terminal "$INSTALL_SOUND" >/dev/null 2>&1 &
+  elif command -v afplay >/dev/null 2>&1; then
+    afplay "$INSTALL_SOUND" >/dev/null 2>&1 &
+  elif command -v ffplay >/dev/null 2>&1; then
+    ffplay -nodisp -autoexit "$INSTALL_SOUND" >/dev/null 2>&1 &
+  elif command -v termux-media-player >/dev/null 2>&1; then
+    termux-media-player play "$INSTALL_SOUND" >/dev/null 2>&1 || true
+  fi
+fi
+
 echo -e "\n\033[1;32m✅ Instalasi Berhasil!\033[0m"
-echo -e "Di Termux: jalankan \033[1;33magy-switcher\033[0m untuk menu interaktif (Add/Remove/List Account)."
+echo -e "Di Terminal: jalankan \033[1;33magy-switcher\033[0m untuk menu interaktif (Add/Remove/List Account)."
 echo -e "Di Antigravity:"
 echo -e "  - \033[1;33m/switcher-account\033[0m   : Ganti akun Google Antigravity secara interaktif"
 echo -e "  - \033[1;33m/antigravity-switcher\033[0m: Aktifkan / nonaktifkan auto-rotation pada HTTP 429"

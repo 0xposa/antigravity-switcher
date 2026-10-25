@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/env bash
+#!/usr/bin/env bash
 # agy-auto / agy-claude: Antigravity runner with auto-rotation for any model
 set -e
 

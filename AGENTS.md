@@ -29,8 +29,8 @@
 - Ambil daftar akun real-time dengan `agy-switcher --list-json`, lalu panggil `ask_question` dengan daftar email akun (berikan tanda ` (Aktif)` pada akun yang sedang aktif).
 - Jalankan `agy-switcher --switch "<email_terpilih>"` setelah user memilih.
 
-## 3. Termux Management
-- Pengelolaan akun di luar Antigravity (menambah akun baru atau menghapus akun) dilakukan melalui CLI Termux:
+## 3. Terminal Management
+- Pengelolaan akun di luar Antigravity (menambah akun baru atau menghapus akun) dilakukan melalui CLI Terminal:
   ```bash
   agy-switcher
   ```
