@@ -7,7 +7,7 @@
 [![Release](https://img.shields.io/badge/Release-v1.1-blue.svg)](https://github.com/0xposa/antigravity-switcher/releases)
 [![Twitter Follow](https://img.shields.io/twitter/follow/0xposa?style=social)](https://x.com/0xposa)
 [![License: Custom (No Derivatives)](https://img.shields.io/badge/License-No--Derivatives-red.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-green.svg)]()
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows%20%7C%20Termux-green.svg)]()
 
 ---
 
@@ -46,7 +46,7 @@ Google Antigravity CLI (`agy`) secara bawaan hanya menyimpan satu sesi login akt
 
 Jalankan perintah one-line berikut di Terminal:
 
-### 🐧 Linux & 🍏 macOS
+### 🐧 Linux, 🍏 macOS & 📱 Termux
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.sh)"
 ```
@@ -199,7 +199,7 @@ Google Antigravity CLI (`agy`) natively only retains a single active login sessi
  
 Run the following one-liner in your Terminal:
 
-### 🐧 Linux & 🍏 macOS
+### 🐧 Linux, 🍏 macOS & 📱 Termux
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/0xposa/antigravity-switcher/main/install.sh)"
 ```
